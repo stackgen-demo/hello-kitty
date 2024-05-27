@@ -19,14 +19,35 @@ def lambda_handler(event, context):
         "headers": {"Content-Type": "text/html"},
         "body": f"""
             <html>
-                <head>
-                    <title>Random Cat Photo</title>
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-                </head>
-                <body>
-                    <img style="height: 500px" src="{image_url}" />
-                    <p>{attribution_text}</p>
-                </body>
+            <head>
+                <title>Random Cat Photo</title>
+                <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+                />
+            </head>
+            <body
+                style="
+                height: 100vh;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                max-width: 100vw;
+                "
+            >
+                <div
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    align-items: center;
+                "
+                >
+                <img style="height: 500px" src="{image_url}" />
+                <p>{attribution_text}</p>
+                </div>
+            </body>
             </html>
         """,
     }
