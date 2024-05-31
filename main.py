@@ -3,6 +3,9 @@ import boto3
 import random
 from botocore.config import Config
 
+bucket = os.environ["IMAGES_BUCKET"]
+config = Config(signature_version='s3v4')
+s3 = boto3.client("s3",config=config)
 
 def lambda_handler(event, context):
     total_images = int(os.environ["TOTAL_IMAGES"])
@@ -54,9 +57,7 @@ def lambda_handler(event, context):
 
 
 def get_image_s3(image_number):
-    bucket = os.environ["IMAGES_BUCKET"]
-    config = Config(signature_version='s3v4')
-    s3 = boto3.client("s3",config=config)
+    
 
     image_key = f"{image_number}.jpg"
     attribution_text_key = f"{image_number}.txt"
