@@ -5,9 +5,7 @@ from botocore.config import Config
 
 
 def lambda_handler(event, context):
-    total_images = int(os.environ["TOTAL_IMAGES"])
-
-    image_number = random.randint(1, total_images)
+    image_number = random.randint(1, 6) # 6 images in the bucket
 
     try:
         image_url, attribution_text = get_image_s3(image_number)

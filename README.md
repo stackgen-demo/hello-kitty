@@ -9,6 +9,10 @@ We encourage you to use appCD to generate IaC for this sample app. appCD provide
 
 Get started with IaC generation for this repo by following the instructions on [appCD Documentation](https://docs.appCD.io/getting-started)
 
+### Environment variables
+
+- IMAGES_BUCKET: S3 bucket name where images are stored
+
 ## Other Sample Projects to try
 
 - [retroboard](https://github.com/appcd-demo/retroboard) - python app that can be deployed to AWS Lambda, DynamoDB, SQS, S3, SNS
