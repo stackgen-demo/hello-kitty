@@ -1,0 +1,36 @@
+name: appstack-apply
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  TF_STATE_BUCKET: "180217099948-states"
+  APPSTACK_UUID: "b4320db7-9f52-4421-bdef-7c68437e2f81"
+  AWS_ROLE_TO_ASSUME: "arn:aws:iam::180217099948:role/github"
+  AWS_REGION: "us-west-2"
+
+jobs:
+  apply-appstack:
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Apply TF Changes
+        uses: ./.github/workflows/apply
+        with:
+          tf_state_bucket: ${{ env.TF_STATE_BUCKET }}
+          tf_state_key: ${{ github.repository_owner }}/${{ github.repository }}/terraform.tfstate
+          aws_region: ${{ env.AWS_REGION }}

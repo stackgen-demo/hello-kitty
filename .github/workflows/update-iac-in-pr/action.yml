@@ -1,0 +1,63 @@
+name: update-iac-in-pr
+description: Update IaC in PR
+
+
+inputs:
+  tf_state_bucket:
+    type: string
+    description: The bucket that contains the Terraform state.
+    required: true
+  tf_state_key:
+    type: string
+    description: The key that contains the Terraform state.
+    required: true
+  aws_region:
+    type: string
+    description: The AWS region.
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: tfvars & build lambda package
+      shell: bash
+      run: |
+        echo 'region="us-east-1"' > ./generated/terraform/terraform.tfvars
+        make build
+        cp build/* ./generated/terraform/build/
+        echo 'terraform {
+          backend "s3" {}
+        }' > ./generated/terraform/backend.tf
+
+    - name: Terraform Init
+      shell: bash
+      run: |
+        terraform init \
+          -backend-config="bucket=${{ inputs.tf_state_bucket }}" \
+          -backend-config="key=${{ inputs.tf_state_key }}" \
+          -backend-config="region=${{ secrets.AWS_REGION }}"
+      working-directory: ./generated/terraform
+
+    - name: Terraform Plan
+      shell: bash
+      id: plan
+      run: terraform plan -no-color
+      working-directory: ./generated/terraform
+      continue-on-error: true
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        title: "Update AppStack changes"
+        branch: "appstack-update"
+        base: "main"
+        body: |
+          This PR updates the AppStack changes in the repository.
+
+          Terraform Plan Output:
+          ```
+          ${{ steps.plan.outputs.stdout }}
+          ```
