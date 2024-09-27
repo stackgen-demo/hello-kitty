@@ -34,9 +34,19 @@ jobs:
             -backend-config="key=${{ github.repository_owner }}/${{ github.repository }}/terraform.tfstate" \
             -backend-config="region=${{ env.AWS_REGION }}"
         working-directory: ./generated/terraform
-      
+
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
         working-directory: ./generated/terraform
         continue-on-error: true
+
+      - name: Comment Terraform Plan Output
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            Terraform Plan Output:
+            ```
+            ${{ steps.plan.outputs.stdout }}
+            ```
+          mode: 'recreate'
