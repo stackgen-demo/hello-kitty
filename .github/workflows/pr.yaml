@@ -40,17 +40,3 @@ jobs:
         run: terraform plan -no-color
         working-directory: ./generated/terraform
         continue-on-error: true
-      
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          title: 'Update IaC changes'
-          branch: 'iac-update'
-          base: 'main'
-          body: |
-            This PR updates the IaC changes in the repository.
-
-            Terraform Plan Output:
-            ```
-            ${{ steps.plan.outputs.stdout }}
-            ```
