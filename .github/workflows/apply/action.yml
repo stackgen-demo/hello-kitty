@@ -22,12 +22,7 @@ runs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: tfvars & build lambda package
-      shell: bash
-      run: |
-        make build
-
-    - name: Terraform Init
+    - name: TF Init
       shell: bash
       run: |
         terraform init \

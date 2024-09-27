@@ -7,7 +7,6 @@ on:
 
 env:
   TF_STATE_BUCKET: "180217099948-states"
-  APPSTACK_UUID: "b4320db7-9f52-4421-bdef-7c68437e2f81"
   AWS_REGION: "us-west-2"
 
 jobs:
