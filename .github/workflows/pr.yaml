@@ -39,7 +39,7 @@ jobs:
         run: |
           terraform init \
             -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
-            -backend-config="key=${{ github.repository_owner }}/${{ github.repository }}/terraform.tfstate" \
+            -backend-config="key=${{ github.repository }}/terraform.tfstate" \
             -backend-config="region=${{ env.AWS_REGION }}"
         working-directory: ./generated/terraform
 

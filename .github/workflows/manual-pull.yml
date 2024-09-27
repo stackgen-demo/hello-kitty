@@ -41,5 +41,5 @@ jobs:
         uses: ./.github/workflows/update-iac-in-pr
         with:
           tf_state_bucket: ${{ env.TF_STATE_BUCKET }}
-          tf_state_key: ${{ github.repository_owner }}/${{ github.repository }}/terraform.tfstate
+          tf_state_key: ${{ github.repository }}/terraform.tfstate
           aws_region: ${{ env.AWS_REGION }}
