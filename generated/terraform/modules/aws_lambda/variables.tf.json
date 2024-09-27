@@ -1,0 +1,165 @@
+{
+    "variable": {
+        "architecture": [
+            {
+                "default": "x86_64",
+                "description": "The architectures supported by the function.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "authorization_type": [
+            {
+                "default": "NONE",
+                "description": "The authorization type for the function URL.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "cors":[
+            {
+                "description": "The CORS configuration for the function.",
+                "nullable": true,
+                "type": "list(object({ allow_credentials: bool, allow_headers: list(string), allow_methods: list(string), allow_origins: list(string), max_age: number }))"
+            }
+        ],
+        "create_function_url": [
+            {
+                "default": false,
+                "description": "Whether to create a URL for the Lambda Function.",
+                "nullable": true,
+                "type": "bool"
+            }
+        ],
+        "description": [
+            {
+                "description": "Description of what your Lambda Function does.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "environment_variables": [
+            {
+                "description": "A map that defines environment variables for the Lambda Function.",
+                "nullable": true,
+                "type": "map(string)"
+            }
+        ],
+        "event_source_arn": [
+            {
+                "description": "The ARN of the event source.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "filename": [
+            {
+                "description": "The path to the function's deployment package(zip) within the local filesystem",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "function_name": [
+            {
+                "description": "Unique name for your Lambda Function.",
+                "nullable": false,
+                "type": "string"
+            }
+        ],
+        "handler": [
+            {
+                "default": "main.lambda_handler",
+                "description": "The entry point for the Lambda Function.",
+                "nullable": false,
+                "type": "string"
+            }
+        ],
+        "log_format": [
+            {
+                "description": "The format of the logs in the log group.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "log_group_name": [
+            {
+                "description": "The name of the CloudWatch log group to send logs to.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "role": [
+            {
+                "description": "The ARN of the IAM role that the Lambda Function assumes when it executes your function to access any other AWS services.",
+                "nullable": false,
+                "type": "string"
+            }
+        ],
+        "runtime": [
+            {
+                "description": "runtime to use when running the Lambda Function.",
+                "nullable": false,
+                "type": "string",
+                "default": "python3.8"
+            }
+        ],
+        "timeout": [
+            {
+                "description": "The amount of time your Lambda Function has to run in seconds.",
+                "default": 3,
+                "nullable": true,
+                "type": "number"
+            }
+        ],
+        "memory_size": [
+            {
+                "description": "The amount of memory that your Lambda Function has access to in MB.",
+                "default": 128,
+                "nullable": true,
+                "type": "number"
+            }
+        ],
+        "s3_bucket": [
+            {
+                "description": "The S3 bucket location that contains the function's deployment package.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "s3_key": [
+            {
+                "description": "The S3 key of an object containing the function's deployment package.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "s3_object_version": [
+            {
+                "description": "The object version of the function's deployment package.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "system_log_level": [
+            {
+                "description": "The log level for the Lambda Function.",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "event_source_mapping":[
+            {
+                "description": "The event source mapping configuration.",
+                "nullable": true,
+                "type": "list(object({ event_source_arn: string, starting_position: string,batch_size:number,enabled:bool,msk_topic:string,mq_queue:string,bisect_batch_on_function_error:bool, maximum_record_age_in_seconds:number,maximum_retry_attempts:number,parallelization_factor:number,on_failure_destination_arn:string,maximum_batching_window_in_seconds:number,filter_pattern:string,collection_name:string,database_name:string,full_document:string,maximum_concurrency:number,principal:string }))"
+            }
+        ],
+        "tags":[
+            {
+                "description": "A mapping of tags to assign to the resource.",
+                "nullable": true,
+                "type": "map(string)"
+            }
+        ]
+    }
+}

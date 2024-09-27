@@ -1,0 +1,14 @@
+{
+  "output": {
+    "arn": {
+      "description": "The value of the arn output",
+      "sensitive": false,
+      "value": "${aws_iam_role.this.arn}"
+    },
+    "name": {
+      "description": "The value of the name output",
+      "sensitive": false,
+      "value": "${aws_iam_role.this.name}"
+    }
+  }
+}
