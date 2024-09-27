@@ -8,7 +8,6 @@ on:
 env:
   TF_STATE_BUCKET: "180217099948-states"
   APPSTACK_UUID: "b4320db7-9f52-4421-bdef-7c68437e2f81"
-  AWS_ROLE_TO_ASSUME: "arn:aws:iam::180217099948:role/github"
   AWS_REGION: "us-west-2"
 
 jobs:
@@ -25,7 +24,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Apply TF Changes
