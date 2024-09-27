@@ -1,9 +1,12 @@
-name: appstack-apply
+name: infra-apply
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'generated/terraform/**'
+      - '.github/workflows/**'
 
 env:
   TF_STATE_BUCKET: "stackgen-meetup-terraform-state"
