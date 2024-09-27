@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  TF_STATE_BUCKET: "stackgen-meetup-state-bucket"
+  TF_STATE_BUCKET: "stackgen-meetup-terraform-state"
   AWS_REGION: "us-west-2"
 
 jobs:
