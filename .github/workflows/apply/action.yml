@@ -22,6 +22,15 @@ runs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
+    - name: Create backend.tf
+      shell: bash
+      run: |
+        cat <<EOF > ./generated/terraform/backend.tf
+        terraform {
+          backend "s3" {}
+        }
+        EOF
+
     - name: TF Init
       shell: bash
       run: |
@@ -34,6 +43,6 @@ runs:
     - name: TF Apply
       shell: bash
       id: apply
-      run: terraform apply -no-color --auto-approve
+      run: terraform apply -no-color --auto-approve --var region=${{ inputs.aws_region }}
       working-directory: ./generated/terraform
       continue-on-error: true
