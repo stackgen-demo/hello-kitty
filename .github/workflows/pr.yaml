@@ -26,6 +26,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create backend.tf
+        run: |
+          cat <<EOF > ./generated/terraform/backend.tf
+          terraform {
+            backend "s3" {}
+          }
+          EOF
     
       - name: Terraform Init
         run: |
@@ -37,7 +45,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: terraform plan -no-color --var region=${{ env.AWS_REGION }}
         working-directory: ./generated/terraform
         continue-on-error: true
 
