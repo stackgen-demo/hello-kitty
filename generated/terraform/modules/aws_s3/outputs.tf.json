@@ -1,0 +1,24 @@
+{
+  "output": {
+    "arn": {
+      "description": "The value of the arn output",
+      "sensitive": false,
+      "value": "${aws_s3_bucket.this.arn}"
+    },
+    "bucket_name": {
+      "description": "The value of the bucket_name output",
+      "sensitive": false,
+      "value": "${aws_s3_bucket.this.id}"
+    },
+    "bucket_website_endpoint": {
+      "description": "The value of the bucket_website_endpoint output",
+      "sensitive": false,
+      "value": "${var.enable_website_configuration ? aws_s3_bucket_website_configuration.this[0].website_endpoint : null}"
+    },
+    "kms_arn": {
+      "description": "The value of the kms_arn output",
+      "sensitive": false,
+      "value": "${var.sse_algorithm == \"aws:kms\" ? aws_kms_key.custom_s3_kms_key[0].arn : null}"
+    }
+  }
+}

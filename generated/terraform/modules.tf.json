@@ -1,0 +1,81 @@
+{
+  "module": {
+    "appcd_00a20b0a-2ec0-5bdc-a08d-65a85dc81d5b": {
+      "architecture": "x86_64",
+      "authorization_type": "NONE",
+      "cors": [],
+      "create_function_url": false,
+      "description": null,
+      "environment_variables": {
+        "IMAGES_BUCKET": "niraj-42-assets"
+      },
+      "event_source_arn": null,
+      "event_source_mapping": [],
+      "filename": null,
+      "function_name": "hello-kitty-function",
+      "handler": "main.lambda_handler",
+      "log_format": null,
+      "log_group_name": "${module.appcd_86ec452a-770a-59bf-87dd-67ed883e25e5.name}",
+      "memory_size": 128,
+      "role": "${module.appcd_b71fd16c-797e-5a95-8e1b-ab22f1e34f43.arn}",
+      "runtime": "python3.8",
+      "s3_bucket": null,
+      "s3_key": null,
+      "s3_object_version": null,
+      "source": "./modules/aws_lambda",
+      "system_log_level": null,
+      "tags": {
+        "appstack": "hello-fork",
+        "component": "hello-kitty"
+      },
+      "timeout": 3
+    },
+    "appcd_0d6135a2-a438-4d6d-bbd1-17031625132e": {
+      "name": "Writer",
+      "policy": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"CloudWatchLogGroup86ec452a770a59bf87dd67ed883e25e5\",\n      \"Action\": [\n        \"logs:CreateLogGroup\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_86ec452a-770a-59bf-87dd-67ed883e25e5.arn}\"\n      ]\n    },\n    {\n      \"Sid\": \"\",\n      \"Action\": [\n        \"logs:CreateLogStream\",\n        \"logs:PutLogEvents\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.module_name.arn}:*\"\n      ]\n    }\n  ]\n}",
+      "role": "${module.appcd_b71fd16c-797e-5a95-8e1b-ab22f1e34f43.name}",
+      "role_type": "Writer",
+      "source": "./modules/aws_iam_role_policy"
+    },
+    "appcd_551e1d2b-88ec-5406-87cf-c51521bbe894": {
+      "block_public_access": true,
+      "bucket_name": "niraj-42-assets",
+      "bucket_policy": "",
+      "enable_versioning": true,
+      "enable_website_configuration": false,
+      "source": "./modules/aws_s3",
+      "sse_algorithm": "aws:kms",
+      "tags": {
+        "appstack": "hello-fork",
+        "component": "hello-kitty"
+      },
+      "website_error_document": "404.html",
+      "website_index_document": "index.html"
+    },
+    "appcd_64118063-f693-42f4-807a-2fbd4519d465": {
+      "name": "${images_bucket}-aws_s3-hello-kitty-policy",
+      "policy": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"AllowKmsAccess\",\n      \"Action\": [\n        \"kms:Decrypt\",\n        \"kms:Encrypt\",\n        \"kms:GenerateDataKey\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.kms_arn}\"\n      ]\n    },\n    {\n      \"Sid\": \"hellokittyIMAGESBUCKETS3Bucket551e1d2b88ec540687cfc51521bbe894\",\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:GetObjectVersion\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": [\n        \"${module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.arn}\",\n        \"${module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.arn}/*\"\n      ]\n    }\n  ]\n}",
+      "role": "${module.appcd_b71fd16c-797e-5a95-8e1b-ab22f1e34f43.name}",
+      "role_type": "Custom",
+      "source": "./modules/aws_iam_role_policy"
+    },
+    "appcd_86ec452a-770a-59bf-87dd-67ed883e25e5": {
+      "name": "/aws/lambda/hello-kitty-function",
+      "retention_in_days": 7,
+      "source": "./modules/aws_cloudwatch_log_group",
+      "tags": {
+        "appstack": "hello-fork",
+        "component": "hello-kitty"
+      }
+    },
+    "appcd_b71fd16c-797e-5a95-8e1b-ab22f1e34f43": {
+      "assume_role_policy": "{\n\t\t\"Version\": \"2012-10-17\",\n\t\t\"Statement\":{\n\t\t\t\t\"Action\": \"sts:AssumeRole\",\n\t\t\t\t\"Effect\": \"Allow\",\n\t\t\t\t\"Principal\": {\n\t\t\t\t\t\"Service\": \"lambda.amazonaws.com\"\n\t\t\t\t}\n\t\t\t}\n\t}",
+      "description": null,
+      "force_detach_policies": true,
+      "inline_policy": [],
+      "name": "hello-kitty-role",
+      "source": "./modules/aws_iam_role",
+      "tags": null
+    }
+  }
+}
