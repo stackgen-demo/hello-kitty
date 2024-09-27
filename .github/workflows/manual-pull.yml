@@ -1,0 +1,45 @@
+name: manual-pull-infra-changes
+
+on:
+  workflow_dispatch: {}
+
+env:
+  TF_STATE_BUCKET: "stackgen-meetup-terraform-state"
+  APPSTACK_UUID: "4bbc5aa4-f3ff-4051-b87e-c39990b67933"
+  AWS_REGION: "us-west-2"
+
+jobs:
+  pull-appstack:
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download IaC
+        uses: appcd-dev/download-action@v0.5
+        env:
+          APPCD_URL: https://cloud.stackgen.com
+          APPCD_TOKEN: ${{ secrets.APPCD_TOKEN }}
+        with:
+          appstack_uuid: ${{ env.APPSTACK_UUID }}
+          output: ./infra
+          latest: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update IaC in PR
+        uses: ./.github/workflows/update-iac-in-pr
+        with:
+          tf_state_bucket: ${{ env.TF_STATE_BUCKET }}
+          tf_state_key: ${{ github.repository }}/terraform.tfstate
+          aws_region: ${{ env.AWS_REGION }}

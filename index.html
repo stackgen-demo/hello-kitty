@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <title>Random Cat Photo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+</head>
+
+<body style="
+                height: 100vh;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                max-width: 100vw;
+                ">
+    <div style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    align-items: center;
+                ">
+        <img style="height: 500px" src="{image_url}" />
+    </div>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit">Upload</button>
+    </form>
+
+    <footer style="position: absolute; bottom: 0; width: 100%; text-align: center; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 10px;">
+        Images from Unsplash
+    </footer>
+</body>
+
+</html>

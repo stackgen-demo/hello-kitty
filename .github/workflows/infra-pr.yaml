@@ -1,0 +1,63 @@
+name: infra-pr
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'infra/terraform/**'
+      - '.github/workflows/**'
+
+env:
+  TF_STATE_BUCKET: "stackgen-meetup-terraform-state"
+  AWS_REGION: "us-west-2"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create backend.tf
+        run: |
+          cat <<EOF > ./infra/terraform/backend.tf
+          terraform {
+            backend "s3" {}
+          }
+          EOF
+    
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ github.repository }}/terraform.tfstate" \
+            -backend-config="region=${{ env.AWS_REGION }}"
+        working-directory: ./infra/terraform
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color --var region=${{ env.AWS_REGION }}
+        working-directory: ./infra/terraform
+        continue-on-error: true
+
+      - name: Comment Terraform Plan Output
+        uses: thollander/actions-comment-pull-request@v2.4.3
+        with:
+          message: |
+            Terraform Plan Output:
+            ```
+            ${{ steps.plan.outputs.stdout }}
+            ```
+          mode: 'recreate'
