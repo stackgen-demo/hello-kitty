@@ -1,0 +1,71 @@
+{
+    "variable": {
+      "block_public_access": [
+        {
+          "default": true,
+          "description": "A state of block public access. If false, block public access is not enabled.",
+          "type": "bool",
+          "nullable": true
+        }
+      ],
+      "bucket_name": [
+        {
+          "description": "The name of the s3 bucket",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "enable_versioning": [
+        {
+          "default": true,
+          "description": "Enable versioning for the bucket",
+          "type": "bool",
+          "nullable": true
+        }
+      ],
+      "sse_algorithm": [
+        {
+          "default": "aws:kms",
+          "description": "The server-side encryption algorithm to use. Valid values are AES256 and aws:kms. If you specify aws:kms, a new KMS key will be provisioned and used. If empty, no encryption is performed.",
+          "type": "string",
+          "nullable": true
+        }
+      ],
+      "enable_website_configuration": [
+        {
+          "default": false,
+          "description": "Enable website configuration for the bucket",
+          "type": "bool"
+        }
+      ],
+      "website_index_document": [
+        {
+          "description": "The index document for the bucket",
+          "type": "string",
+          "default": "index.html"
+        }
+      ],
+      "website_error_document": [
+        {
+          "description": "The error document for the bucket",
+          "type": "string",
+          "default": "404.html"
+        }
+      ],
+      "bucket_policy": [
+        {
+          "description": "The IAM policy of the bucket (can be used to allow access to other roles or accounts)",
+          "type": "string",
+          "default": ""
+        }
+      ],
+      "tags": [
+        {
+            "default": {},
+            "description": "A mapping of AWS tags to assign to the bucket.",
+            "type": "map(string)",
+            "nullable": true
+        }
+      ]
+    }
+  }
