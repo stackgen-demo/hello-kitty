@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: "us-west-2"
-  BUILD_ARTIFACTS: "stackgen-meetup-build-artifacts"
+  BUILD_ARTIFACTS: "stackgen-builds
 
 jobs:
   build:
