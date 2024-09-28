@@ -68,6 +68,13 @@ def get_random_image_s3():
     bucket = os.environ["IMAGES_BUCKET"]
     s3 = boto3.client("s3", config=Config(signature_version="s3v4"))
 
+    images = [
+        "https://plus.unsplash.com/premium_photo-1664371675060-87e49122263c?q=80&w=2369&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://plus.unsplash.com/premium_photo-1661729755480-4fdb5105b53e?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1662543083678-59a9337010de?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1605054576990-8d1d1e623fad?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    ]
+
     try:
         response = s3.list_objects_v2(Bucket=bucket)
         image_keys = [
@@ -77,7 +84,7 @@ def get_random_image_s3():
         ]
 
         if not image_keys:
-            return "https://images.unsplash.com/photo-1605054576990-8d1d1e623fad?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            return random.choice(images)
 
         random_image_key = random.choice(image_keys)
         return s3.generate_presigned_url(
