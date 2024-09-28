@@ -7,12 +7,12 @@
       "create_function_url": true,
       "description": null,
       "environment_variables": {
-        "IMAGES_BUCKET": "Sridhar Srinivasan"
+        "IMAGES_BUCKET": "sridhar-srinivasan"
       },
       "event_source_arn": null,
       "event_source_mapping": [],
       "filename": null,
-      "function_name": "hello-kitty-functionSridhar Srinivasan",
+      "function_name": "hello-kitty-functionsridhar-srinivasan",
       "handler": "main.lambda_handler",
       "log_format": null,
       "log_group_name": "${module.appcd_86ec452a-770a-59bf-87dd-67ed883e25e5.name}",
@@ -32,7 +32,7 @@
     },
     "appcd_551e1d2b-88ec-5406-87cf-c51521bbe894": {
       "block_public_access": true,
-      "bucket_name": "Sridhar Srinivasan",
+      "bucket_name": "sridhar-srinivasan",
       "bucket_policy": "",
       "enable_versioning": true,
       "enable_website_configuration": false,
@@ -53,7 +53,7 @@
       "source": "./modules/aws_iam_role_policy"
     },
     "appcd_86ec452a-770a-59bf-87dd-67ed883e25e5": {
-      "name": "/aws/lambda/hello-kitty-functionsridhar Srinivasan",
+      "name": "/aws/lambda/hello-kitty-functionsridharsrinivasan",
       "retention_in_days": 7,
       "source": "./modules/aws_cloudwatch_log_group",
       "tags": {
@@ -66,7 +66,7 @@
       "description": null,
       "force_detach_policies": true,
       "inline_policy": [],
-      "name": "hello-kitty-roleSridhar Srinivasan",
+      "name": "hello-kitty-rolesridharsrinivasan",
       "source": "./modules/aws_iam_role",
       "tags": {
         "appstack": "SridharAWS",
