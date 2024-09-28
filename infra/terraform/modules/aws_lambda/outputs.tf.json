@@ -1,0 +1,24 @@
+{
+  "output": {
+    "function_arn": {
+      "description": "The value of the function_arn output",
+      "sensitive": false,
+      "value": "${aws_lambda_function.this.arn}"
+    },
+    "function_name": {
+      "description": "The value of the function_name output",
+      "sensitive": false,
+      "value": "${aws_lambda_function.this.function_name}"
+    },
+    "function_url": {
+      "description": "The value of the function_url output",
+      "sensitive": false,
+      "value": "${var.create_function_url ? aws_lambda_function_url.this[0].function_url : null}"
+    },
+    "invoke_arn": {
+      "description": "The value of the invoke_arn output",
+      "sensitive": false,
+      "value": "${aws_lambda_function.this.invoke_arn}"
+    }
+  }
+}

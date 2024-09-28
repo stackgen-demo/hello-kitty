@@ -1,0 +1,44 @@
+{
+    "variable": {
+        "assume_role_policy": [
+            {
+                "description": "The policy that grants an entity permission to assume the role",
+                "type": "string"
+            }
+        ],
+        "description": [
+            {
+                "description": "The description of the role",
+                "nullable": true,
+                "type": "string"
+            }
+        ],
+        "force_detach_policies": [
+            {
+                "default": true,
+                "description": "Specifies to force detaching any policies the role has before destroying it",
+                "type": "bool"
+            }
+        ],
+        "inline_policy": [
+            {
+                "description": "The policy document",
+                "nullable": true,
+                "type": "list(object({ name: string, policy: string }))"
+            }
+        ],
+        "name": [
+            {
+                "description": "The name of the role",
+                "type": "string"
+            }
+        ],
+        "tags": [
+            {
+                "description": "A mapping of tags to assign to the role",
+                "nullable": true,
+                "type": "map(string)"
+            }
+        ]
+    }
+}
