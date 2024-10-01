@@ -15,10 +15,6 @@ inputs:
     type: string
     description: The AWS region.
     required: true
-  static_assets_bucket:
-    type: string
-    description: The bucket that contains the static assets.
-    required: true
 
 runs:
   using: 'composite'
