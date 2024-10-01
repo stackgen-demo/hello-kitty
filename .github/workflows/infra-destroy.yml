@@ -1,0 +1,49 @@
+name: infra-destroy
+
+on:
+  workflow_dispatch: {}
+
+env:
+  AWS_REGION: "us-west-2"
+
+jobs:
+  destroy:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_TO_ASSUME }}
+
+      - name: Create backend.tf
+        run: |
+          cat <<EOF > ./infra/terraform/backend.tf
+          terraform {
+            backend "s3" {}
+          }
+          EOF
+    
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ github.repository }}/terraform.tfstate" \
+            -backend-config="region=${{ env.AWS_REGION }}"
+        working-directory: ./infra/terraform
+
+      - name: Terraform Destroy
+        id: plan
+        run: terraform destroy -no-color --var region=${{ env.AWS_REGION }} --auto-approve
+        working-directory: ./infra/terraform
+        continue-on-error: true
