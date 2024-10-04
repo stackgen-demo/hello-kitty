@@ -1,4 +1,10 @@
 
+output "aws_s3_leodavis9344_arn" {
+  value = module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.arn
+  sensitive = false
+}
+
+
 output "aws_s3_leodavis9344_bucket_name" {
   value = module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.bucket_name
   sensitive = false
@@ -13,12 +19,6 @@ output "aws_s3_leodavis9344_bucket_website_endpoint" {
 
 output "aws_s3_leodavis9344_kms_arn" {
   value = module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.kms_arn
-  sensitive = false
-}
-
-
-output "aws_s3_leodavis9344_arn" {
-  value = module.appcd_551e1d2b-88ec-5406-87cf-c51521bbe894.arn
   sensitive = false
 }
 
