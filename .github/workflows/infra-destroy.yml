@@ -1,18 +1,13 @@
-name: infra-pr
+name: infra-destroy
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'infra/terraform/**'
-      - '.github/workflows/infra-*.yml'
+  workflow_dispatch: {}
 
 env:
   AWS_REGION: "us-west-2"
 
 jobs:
-  plan:
+  destroy:
     permissions:
       id-token: write
       contents: read
@@ -47,18 +42,8 @@ jobs:
             -backend-config="region=${{ env.AWS_REGION }}"
         working-directory: ./infra/terraform
 
-      - name: Terraform Plan
+      - name: Terraform Destroy
         id: plan
-        run: terraform plan -no-color --var region=${{ env.AWS_REGION }}
+        run: terraform destroy -no-color --var region=${{ env.AWS_REGION }} --auto-approve
         working-directory: ./infra/terraform
         continue-on-error: true
-
-      - name: Comment Terraform Plan Output
-        uses: thollander/actions-comment-pull-request@v2.4.3
-        with:
-          message: |
-            Terraform Plan Output:
-            ```
-            ${{ steps.plan.outputs.stdout }}
-            ```
-          mode: 'recreate'

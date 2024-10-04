@@ -16,6 +16,19 @@ Get started with IaC generation for this repo by following the instructions on [
 
 - [retroboard](https://github.com/appcd-demo/retroboard) - python app that can be deployed to AWS Lambda, DynamoDB, SQS, S3, SNS
 
+## Example Github Actions Workflows
+
+This demo repo includes a few examples of Github Actions Workflows that you can use to deploy your app. Fork this repo and follow below instructions to deploy your own copy.
+
+> [!NOTE]
+> You'll need to add `AWS_ROLE_TO_ASSUME` as a secret in your repository settings to use below workflows.
+- [infra-pr.yml](.github/workflows/infra-pr.yml) - This workflow is triggered when any changes are detected in the `infra/terraform` directory. It comments with Terraform plan output on the PR.
+- [infra-apply.yml](.github/workflows/infra-apply.yml) - This workflow is triggered when a PR is merged to main. It applies the changes to AWS.
+
+> [!IMPORTANT]
+> You'll need to add `APPSTACK_ID` as a variable in your repository settings to use below workflows.
+
+- [manual-pull.yml](.github/workflows/manual-pull.yml) - This workflow is triggered when you click the `Run workflow` button. It uses the `appcd-dev/download-action` to download the IaC for the appstack and creates a PR with the changes.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
